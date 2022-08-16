@@ -1,0 +1,2 @@
+
+nameDROP TABLE category;
