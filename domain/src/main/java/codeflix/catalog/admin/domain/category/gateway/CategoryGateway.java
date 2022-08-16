@@ -1,6 +1,7 @@
 package codeflix.catalog.admin.domain.category.gateway;
 
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.category.entity.Category;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 
@@ -16,5 +17,5 @@ public interface CategoryGateway {
 
     Category update(Category aCategory);
 
-    Pagination<Category> findAll(CategorySearchQuery aQuery);
+    Pagination<Category> findAll(SearchQuery aQuery);
 }

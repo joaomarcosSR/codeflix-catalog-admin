@@ -2,8 +2,8 @@ package codeflix.catalog.admin.application.category.retrieve.list;
 
 import codeflix.catalog.admin.IntegrationTest;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.category.entity.Category;
-import codeflix.catalog.admin.domain.category.gateway.CategorySearchQuery;
 import codeflix.catalog.admin.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ class ListCategoriesUseCaseIT {
 
     @BeforeEach
     void mockUp() {
-        save(categoryRepository,
+        save(this.categoryRepository,
                 Category.newCategory("Filmes", null, true),
                 Category.newCategory("Netflix Originals", "Titulos de autoria da Netflix", true),
                 Category.newCategory("Amazon Originals", "Titulos de autoria da Amazon", true),
@@ -45,10 +45,10 @@ class ListCategoriesUseCaseIT {
         final String expectedSort = "name";
         final String expectedDirection = "asc";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
@@ -78,10 +78,10 @@ class ListCategoriesUseCaseIT {
         final String expectedSort = "name";
         final String expectedDirection = "asc";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
@@ -110,10 +110,10 @@ class ListCategoriesUseCaseIT {
     ) {
         final String expectedTerms = "";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
@@ -143,10 +143,10 @@ class ListCategoriesUseCaseIT {
         final String expectedDirection = "asc";
 
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
@@ -155,8 +155,8 @@ class ListCategoriesUseCaseIT {
         Assertions.assertEquals(expectedTotalElements, actualResult.totalElements());
 
         int index = 0;
-        for (String expectedName : expectedCategoriesName.split(";")) {
-            String actualName = actualResult.items().get(index++).name();
+        for (final String expectedName : expectedCategoriesName.split(";")) {
+            final String actualName = actualResult.items().get(index++).name();
             Assertions.assertEquals(expectedName, actualName);
         }
 

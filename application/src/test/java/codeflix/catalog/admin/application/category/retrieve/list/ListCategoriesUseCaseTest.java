@@ -1,9 +1,9 @@
 package codeflix.catalog.admin.application.category.retrieve.list;
 
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.category.entity.Category;
 import codeflix.catalog.admin.domain.category.gateway.CategoryGateway;
-import codeflix.catalog.admin.domain.category.gateway.CategorySearchQuery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class ListCategoriesUseCaseTest {
 
     @BeforeEach
     void cleanUp() {
-        Mockito.reset(categoryGateway);
+        Mockito.reset(this.categoryGateway);
     }
 
     @Test
@@ -46,17 +46,17 @@ class ListCategoriesUseCaseTest {
         final String expectedSort = "createdAt";
         final String expectedDirection = "asc";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, expectedTotalPages, expectedTotalElements, categories);
 
         final int expectedItemCount = 2;
         final Pagination<CategoryListOutput> expectedResult = expectedPagination.map(CategoryListOutput::from);
 
-        when(categoryGateway.findAll(aQuery)).thenReturn(expectedPagination);
+        when(this.categoryGateway.findAll(aQuery)).thenReturn(expectedPagination);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemCount, actualResult.items().size());
         Assertions.assertEquals(expectedResult, actualResult);
@@ -78,17 +78,17 @@ class ListCategoriesUseCaseTest {
         final String expectedSort = "createdAt";
         final String expectedDirection = "asc";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+        final SearchQuery aQuery =
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, expectedTotalPages, expectedTotalElements, categories);
 
         final int expectedItemCount = 0;
         final Pagination<CategoryListOutput> expectedResult = expectedPagination.map(CategoryListOutput::from);
 
-        when(categoryGateway.findAll(aQuery)).thenReturn(expectedPagination);
+        when(this.categoryGateway.findAll(aQuery)).thenReturn(expectedPagination);
 
-        final Pagination<CategoryListOutput> actualResult = useCase.execute(aQuery);
+        final Pagination<CategoryListOutput> actualResult = this.useCase.execute(aQuery);
 
         Assertions.assertEquals(expectedItemCount, actualResult.items().size());
         Assertions.assertEquals(expectedResult, actualResult);
@@ -102,13 +102,13 @@ class ListCategoriesUseCaseTest {
     void givenAValidQuery_WhenGatewayThrowsException_ThenReturnException() {
         final String expectedErrorMessage = "Gateway error.";
 
-        final CategorySearchQuery aQuery =
-                new CategorySearchQuery(0, 10, "", "createdAt", "asc");
+        final SearchQuery aQuery =
+                new SearchQuery(0, 10, "", "createdAt", "asc");
 
-        when(categoryGateway.findAll(aQuery)).thenThrow(new IllegalStateException(expectedErrorMessage));
+        when(this.categoryGateway.findAll(aQuery)).thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        IllegalStateException actualException =
-                Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(aQuery));
+        final IllegalStateException actualException =
+                Assertions.assertThrows(IllegalStateException.class, () -> this.useCase.execute(aQuery));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }

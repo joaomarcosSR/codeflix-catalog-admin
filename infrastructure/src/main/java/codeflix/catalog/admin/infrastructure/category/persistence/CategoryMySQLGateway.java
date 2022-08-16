@@ -1,9 +1,9 @@
 package codeflix.catalog.admin.infrastructure.category.persistence;
 
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.category.entity.Category;
 import codeflix.catalog.admin.domain.category.gateway.CategoryGateway;
-import codeflix.catalog.admin.domain.category.gateway.CategorySearchQuery;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 import codeflix.catalog.admin.infrastructure.utils.SpecificationUtils;
 import org.springframework.data.domain.Page;
@@ -21,35 +21,35 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     private final CategoryRepository repository;
 
-    public CategoryMySQLGateway(CategoryRepository aRepository) {
-        repository = aRepository;
+    public CategoryMySQLGateway(final CategoryRepository aRepository) {
+        this.repository = aRepository;
     }
 
     @Override
     public Category create(final Category aCategory) {
-        return save(aCategory);
+        return this.save(aCategory);
     }
 
     @Override
     public void deleteById(final CategoryID anId) {
         final String anIdValue = anId.getValue();
-        if (repository.existsById(anIdValue))
-            repository.deleteById(anIdValue);
+        if (this.repository.existsById(anIdValue))
+            this.repository.deleteById(anIdValue);
     }
 
     @Override
     public Optional<Category> findById(final CategoryID anId) {
-        return repository.findById(anId.getValue())
+        return this.repository.findById(anId.getValue())
                 .map(CategoryJpaEntity::toAggregate);
     }
 
     @Override
     public Category update(final Category aCategory) {
-        return save(aCategory);
+        return this.save(aCategory);
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery aQuery) {
+    public Pagination<Category> findAll(final SearchQuery aQuery) {
         final PageRequest page = PageRequest.of(
                 aQuery.page(),
                 aQuery.perPage(),
@@ -64,7 +64,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
                                 .or(like("description", term)))
                 .orElse(null);
 
-        final Page<CategoryJpaEntity> pageResult = repository.findAll(Specification.where(specification), page);
+        final Page<CategoryJpaEntity> pageResult = this.repository.findAll(Specification.where(specification), page);
 
         return new Pagination<>(
                 pageResult.getNumber(),
@@ -75,8 +75,8 @@ public class CategoryMySQLGateway implements CategoryGateway {
         );
     }
 
-    private Category save(Category aCategory) {
-        return repository.save(CategoryJpaEntity.from(aCategory))
+    private Category save(final Category aCategory) {
+        return this.repository.save(CategoryJpaEntity.from(aCategory))
                 .toAggregate();
     }
 }

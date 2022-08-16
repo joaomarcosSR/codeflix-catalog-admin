@@ -1,6 +1,6 @@
-package codeflix.catalog.admin.domain.category.gateway;
+package codeflix.catalog.admin.domain._share.pagination;
 
-public record CategorySearchQuery(
+public record SearchQuery(
         int page,
         int perPage,
         String terms,

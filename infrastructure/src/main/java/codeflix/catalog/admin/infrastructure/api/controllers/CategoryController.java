@@ -10,8 +10,8 @@ import codeflix.catalog.admin.application.category.update.UpdateCategoryCommand;
 import codeflix.catalog.admin.application.category.update.UpdateCategoryOutput;
 import codeflix.catalog.admin.application.category.update.UpdateCategoryUseCase;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain._share.validation.handler.Notification;
-import codeflix.catalog.admin.domain.category.gateway.CategorySearchQuery;
 import codeflix.catalog.admin.infrastructure.api.CategoryAPI;
 import codeflix.catalog.admin.infrastructure.category.models.CategoryListResponse;
 import codeflix.catalog.admin.infrastructure.category.models.CategoryResponse;
@@ -40,7 +40,7 @@ public class CategoryController implements CategoryAPI {
             final CreateCategoryUseCase createCategoryUseCase,
             final GetCategoryByIdUseCase getCategoryByIdUseCase,
             final UpdateCategoryUseCase updateCategoryUseCase,
-            DeleteCategoryUseCase deleteCategoryUseCase, final ListCategoriesUseCase listCategoriesUseCase
+            final DeleteCategoryUseCase deleteCategoryUseCase, final ListCategoriesUseCase listCategoriesUseCase
     ) {
         this.createCategoryUseCase = Objects.requireNonNull(createCategoryUseCase);
         this.getCategoryByIdUseCase = Objects.requireNonNull(getCategoryByIdUseCase);
@@ -62,14 +62,14 @@ public class CategoryController implements CategoryAPI {
         final Function<CreateCategoryOutput, ResponseEntity<?>> onSuccess = output ->
                 ResponseEntity.created(URI.create("/categories/" + output.id())).body(output);//.build instead of .body
 
-        return createCategoryUseCase.execute(aCommand)
+        return this.createCategoryUseCase.execute(aCommand)
                 .fold(onError, onSuccess);
     }
 
     @Override
     public CategoryResponse getById(final String id) {
         return CategoryApiPresenter.present
-                .compose(getCategoryByIdUseCase::execute)
+                .compose(this.getCategoryByIdUseCase::execute)
                 .apply(id);
     }
 
@@ -86,13 +86,13 @@ public class CategoryController implements CategoryAPI {
 
         final Function<UpdateCategoryOutput, ResponseEntity<?>> onSuccess = ResponseEntity::ok;
 
-        return updateCategoryUseCase.execute(aCommand)
+        return this.updateCategoryUseCase.execute(aCommand)
                 .fold(onError, onSuccess);
     }
 
     @Override
-    public void deleteById(String anId) {
-        deleteCategoryUseCase.execute(anId);
+    public void deleteById(final String anId) {
+        this.deleteCategoryUseCase.execute(anId);
     }
 
     @Override
@@ -102,8 +102,8 @@ public class CategoryController implements CategoryAPI {
             final int perPage,
             final String sort,
             final String direction) {
-        return listCategoriesUseCase
-                .execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+        return this.listCategoriesUseCase
+                .execute(new SearchQuery(page, perPage, search, sort, direction))
                 .map(CategoryApiPresenter::present);
     }
 }

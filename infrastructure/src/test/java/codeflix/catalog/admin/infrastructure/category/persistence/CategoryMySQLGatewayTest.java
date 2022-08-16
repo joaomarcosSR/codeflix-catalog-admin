@@ -2,8 +2,8 @@ package codeflix.catalog.admin.infrastructure.category.persistence;
 
 import codeflix.catalog.admin.MySQLGatewayTest;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
+import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.category.entity.Category;
-import codeflix.catalog.admin.domain.category.gateway.CategorySearchQuery;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,11 +28,11 @@ class CategoryMySQLGatewayTest {
 
         final Category aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        final Category actualCategory = categoryGateway.create(aCategory);
+        final Category actualCategory = this.categoryGateway.create(aCategory);
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
         Assertions.assertEquals(expectedName, actualCategory.getName());
@@ -42,7 +42,7 @@ class CategoryMySQLGatewayTest {
         Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.getUpdatedAt());
         Assertions.assertNull(actualCategory.getDeletedAt());
 
-        final CategoryJpaEntity actualEntity = categoryRepository.getById(aCategory.getId().getValue());
+        final CategoryJpaEntity actualEntity = this.categoryRepository.getById(aCategory.getId().getValue());
 
         Assertions.assertEquals(aCategory.getId().getValue(), actualEntity.getId());
         Assertions.assertEquals(expectedName, actualEntity.getName());
@@ -61,17 +61,17 @@ class CategoryMySQLGatewayTest {
 
         final Category aCategory = Category.newCategory("Other Name", null, expectedIsActive);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(aCategory));
+        this.categoryRepository.save(CategoryJpaEntity.from(aCategory));
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
         aCategory.update(expectedName, expectedDescription, expectedIsActive);
 
-        final Category actualCategory = categoryGateway.update(aCategory);
+        final Category actualCategory = this.categoryGateway.update(aCategory);
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
         Assertions.assertEquals(expectedName, actualCategory.getName());
@@ -82,7 +82,7 @@ class CategoryMySQLGatewayTest {
         Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(actualCategory.getCreatedAt()));
         Assertions.assertNull(actualCategory.getDeletedAt());
 
-        final CategoryJpaEntity actualEntity = categoryRepository.getById(aCategory.getId().getValue());
+        final CategoryJpaEntity actualEntity = this.categoryRepository.getById(aCategory.getId().getValue());
 
         Assertions.assertEquals(aCategory.getId().getValue(), actualEntity.getId());
         Assertions.assertEquals(expectedName, actualEntity.getName());
@@ -98,30 +98,30 @@ class CategoryMySQLGatewayTest {
     void givenAPrePersistedCategoryAndValidCategoryId_WhenTryDeleteIt_ThenDeleteCategory() {
         final Category aCategory = Category.newCategory("Filmes", null, true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(aCategory));
+        this.categoryRepository.save(CategoryJpaEntity.from(aCategory));
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
-        categoryGateway.deleteById(aCategory.getId());
+        this.categoryGateway.deleteById(aCategory.getId());
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
     }
 
     @Test
     void givenAPrePersistedCategoryAndInvalidCategoryId_WhenTryDeleteIt_ThenDeleteCategory() {
         final Category aCategory = Category.newCategory("Filmes", null, true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(aCategory));
+        this.categoryRepository.save(CategoryJpaEntity.from(aCategory));
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
-        categoryGateway.deleteById(CategoryID.from("123"));
+        this.categoryGateway.deleteById(CategoryID.from("123"));
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
     }
 
     @Test
@@ -132,15 +132,15 @@ class CategoryMySQLGatewayTest {
 
         final Category aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(aCategory));
+        this.categoryRepository.save(CategoryJpaEntity.from(aCategory));
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
-        final Category actualCategory = categoryGateway.findById(aCategory.getId()).get();
+        final Category actualCategory = this.categoryGateway.findById(aCategory.getId()).get();
 
-        Assertions.assertEquals(1, categoryRepository.count());
+        Assertions.assertEquals(1, this.categoryRepository.count());
 
         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
         Assertions.assertEquals(expectedName, actualCategory.getName());
@@ -153,11 +153,11 @@ class CategoryMySQLGatewayTest {
 
     @Test
     void givenAValidCategoryNotPersisted_WhenCallsCreate_ThenReturnANNewCategory() {
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        final Optional<Category> actualCategoryOp = categoryGateway.findById(CategoryID.unique());
+        final Optional<Category> actualCategoryOp = this.categoryGateway.findById(CategoryID.unique());
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
         Assertions.assertTrue(actualCategoryOp.isEmpty());
     }
@@ -173,18 +173,18 @@ class CategoryMySQLGatewayTest {
         final Category series = Category.newCategory("Series", null, true);
         final Category documentarios = Category.newCategory("Documentarios", null, true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(filmes));
-        categoryRepository.save(CategoryJpaEntity.from(series));
-        categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
+        this.categoryRepository.save(CategoryJpaEntity.from(series));
+        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
 
-        Assertions.assertEquals(3, categoryRepository.count());
+        Assertions.assertEquals(3, this.categoryRepository.count());
 
-        final CategorySearchQuery query =
-                new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        final SearchQuery query =
+                new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
 
-        final Pagination<Category> actualResult = categoryGateway.findAll(query);
+        final Pagination<Category> actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
@@ -201,12 +201,12 @@ class CategoryMySQLGatewayTest {
         final int expectedTotalPages = 0;
         final int expectedTotalElements = 0;
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        final CategorySearchQuery query =
-                new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        final SearchQuery query =
+                new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
 
-        final Pagination<Category> actualResult = categoryGateway.findAll(query);
+        final Pagination<Category> actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
@@ -226,18 +226,18 @@ class CategoryMySQLGatewayTest {
         final Category series = Category.newCategory("Series", null, true);
         final Category documentarios = Category.newCategory("Documentarios", null, true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(filmes));
-        categoryRepository.save(CategoryJpaEntity.from(series));
-        categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
+        this.categoryRepository.save(CategoryJpaEntity.from(series));
+        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
 
-        Assertions.assertEquals(3, categoryRepository.count());
+        Assertions.assertEquals(3, this.categoryRepository.count());
 
-        CategorySearchQuery query =
-                new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        SearchQuery query =
+                new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
 
-        Pagination<Category> actualResult = categoryGateway.findAll(query);
+        Pagination<Category> actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
@@ -250,9 +250,9 @@ class CategoryMySQLGatewayTest {
         expectedPage = 1;
 
         query =
-                new CategorySearchQuery(1, expectedPerPage, "", "name", "asc");
+                new SearchQuery(1, expectedPerPage, "", "name", "asc");
 
-        actualResult = categoryGateway.findAll(query);
+        actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
@@ -274,18 +274,18 @@ class CategoryMySQLGatewayTest {
         final Category series = Category.newCategory("Series", null, true);
         final Category documentarios = Category.newCategory("Documentarios", null, true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(filmes));
-        categoryRepository.save(CategoryJpaEntity.from(series));
-        categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
+        this.categoryRepository.save(CategoryJpaEntity.from(series));
+        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
 
-        Assertions.assertEquals(3, categoryRepository.count());
+        Assertions.assertEquals(3, this.categoryRepository.count());
 
-        final CategorySearchQuery query =
-                new CategorySearchQuery(expectedPage, expectedPerPage, aTerms, "name", "asc");
+        final SearchQuery query =
+                new SearchQuery(expectedPage, expectedPerPage, aTerms, "name", "asc");
 
-        final Pagination<Category> actualResult = categoryGateway.findAll(query);
+        final Pagination<Category> actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
@@ -307,18 +307,18 @@ class CategoryMySQLGatewayTest {
         final Category series = Category.newCategory("Series", "Todos assistem", true);
         final Category documentarios = Category.newCategory("Documentarios", "A categoria mais visualizada", true);
 
-        Assertions.assertEquals(0, categoryRepository.count());
+        Assertions.assertEquals(0, this.categoryRepository.count());
 
-        categoryRepository.save(CategoryJpaEntity.from(filmes));
-        categoryRepository.save(CategoryJpaEntity.from(series));
-        categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
+        this.categoryRepository.save(CategoryJpaEntity.from(series));
+        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
 
-        Assertions.assertEquals(3, categoryRepository.count());
+        Assertions.assertEquals(3, this.categoryRepository.count());
 
-        final CategorySearchQuery query =
-                new CategorySearchQuery(expectedPage, expectedPerPage, aTerms, "name", "asc");
+        final SearchQuery query =
+                new SearchQuery(expectedPage, expectedPerPage, aTerms, "name", "asc");
 
-        final Pagination<Category> actualResult = categoryGateway.findAll(query);
+        final Pagination<Category> actualResult = this.categoryGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
