@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.Instant;
 
-@Entity
-@Table(name = "category")
+@Entity(name = "Category")
+@Table(name = "categories")
 public class CategoryJpaEntity {
 
     @Id
@@ -69,69 +69,69 @@ public class CategoryJpaEntity {
 
     public Category toAggregate() {
         return Category.with(
-                CategoryID.from(getId()),
-                getName(),
-                getDescription(),
-                isActive(),
-                getCreatedAt(),
-                getUpdatedAt(),
-                getDeletedAt()
+                CategoryID.from(this.getId()),
+                this.getName(),
+                this.getDescription(),
+                this.isActive(),
+                this.getCreatedAt(),
+                this.getUpdatedAt(),
+                this.getDeletedAt()
         );
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(final boolean active) {
         this.active = active;
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(final Instant createdAt) {
         this.createdAt = createdAt;
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(final Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     public Instant getDeletedAt() {
-        return deletedAt;
+        return this.deletedAt;
     }
 
-    public void setDeletedAt(Instant deletedAt) {
+    public void setDeletedAt(final Instant deletedAt) {
         this.deletedAt = deletedAt;
     }
 }

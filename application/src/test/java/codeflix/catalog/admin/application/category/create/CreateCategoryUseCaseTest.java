@@ -1,9 +1,9 @@
 package codeflix.catalog.admin.application.category.create;
 
+import codeflix.catalog.admin.application.UseCaseTest;
 import codeflix.catalog.admin.domain._share.validation.handler.Notification;
 import codeflix.catalog.admin.domain.category.gateway.CategoryGateway;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -20,15 +21,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CreateCategoryUseCaseTest {
+class CreateCategoryUseCaseTest extends UseCaseTest {
     @InjectMocks
     private CreateCategoryUseCaseImpl useCase;
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    void cleanUp() {
-        Mockito.reset(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(this.categoryGateway);
     }
 
     @Test
@@ -39,14 +40,14 @@ class CreateCategoryUseCaseTest {
 
         final CreateCategoryCommand aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
-        when(categoryGateway.create(any())).thenAnswer(returnsFirstArg());
+        when(this.categoryGateway.create(any())).thenAnswer(returnsFirstArg());
 
-        final CreateCategoryOutput actualOutput = useCase.execute(aCommand).get();
+        final CreateCategoryOutput actualOutput = this.useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(categoryGateway).create(argThat(aCreatedCategory ->
+        Mockito.verify(this.categoryGateway).create(argThat(aCreatedCategory ->
                 Objects.nonNull(aCreatedCategory.getId())
                         && Objects.equals(expectedName, aCreatedCategory.getName())
                         && Objects.equals(expectedDescription, aCreatedCategory.getDescription())
@@ -63,12 +64,12 @@ class CreateCategoryUseCaseTest {
 
         final CreateCategoryCommand aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
-        final Notification actualNotification = useCase.execute(aCommand).getLeft();
+        final Notification actualNotification = this.useCase.execute(aCommand).getLeft();
 
         Assertions.assertEquals(expectedErrorCount, actualNotification.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, actualNotification.firstError().message());
 
-        Mockito.verify(categoryGateway, never()).create(any());
+        Mockito.verify(this.categoryGateway, never()).create(any());
     }
 
     @Test
@@ -79,14 +80,14 @@ class CreateCategoryUseCaseTest {
 
         final CreateCategoryCommand aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
-        when(categoryGateway.create(any())).thenAnswer(returnsFirstArg());
+        when(this.categoryGateway.create(any())).thenAnswer(returnsFirstArg());
 
-        final CreateCategoryOutput actualOutput = useCase.execute(aCommand).get();
+        final CreateCategoryOutput actualOutput = this.useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(categoryGateway).create(argThat(aCreatedCategory ->
+        Mockito.verify(this.categoryGateway).create(argThat(aCreatedCategory ->
                 Objects.nonNull(aCreatedCategory.getId())
                         && Objects.equals(expectedName, aCreatedCategory.getName())
                         && Objects.equals(expectedDescription, aCreatedCategory.getDescription())
@@ -103,14 +104,14 @@ class CreateCategoryUseCaseTest {
 
         final CreateCategoryCommand aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
-        when(categoryGateway.create(any())).thenThrow(new IllegalArgumentException("Gateway error."));
+        when(this.categoryGateway.create(any())).thenThrow(new IllegalArgumentException("Gateway error."));
 
-        final Notification actualNotification = useCase.execute(aCommand).getLeft();
+        final Notification actualNotification = this.useCase.execute(aCommand).getLeft();
 
         Assertions.assertEquals(expectedErrorCount, actualNotification.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, actualNotification.firstError().message());
 
-        Mockito.verify(categoryGateway).create(argThat(aCreatedCategory ->
+        Mockito.verify(this.categoryGateway).create(argThat(aCreatedCategory ->
                 Objects.nonNull(aCreatedCategory.getId())
                         && Objects.equals(expectedName, aCreatedCategory.getName())
                         && Objects.equals(expectedDescription, aCreatedCategory.getDescription())

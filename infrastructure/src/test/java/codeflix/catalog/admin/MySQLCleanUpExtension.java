@@ -1,25 +1,29 @@
 package codeflix.catalog.admin;
 
+import codeflix.catalog.admin.infrastructure.category.persistence.CategoryRepository;
+import codeflix.catalog.admin.infrastructure.genre.persistence.GenreRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collection;
+import java.util.List;
 
 public class MySQLCleanUpExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(final ExtensionContext context) {
-        Collection<CrudRepository> repositories = SpringExtension
-                .getApplicationContext(context)
-                .getBeansOfType(CrudRepository.class)
-                .values();
+        final ApplicationContext appContext = SpringExtension.getApplicationContext(context);
 
-        cleanUp(repositories);
+        this.cleanUp(List.of(
+                appContext.getBean(GenreRepository.class),
+                appContext.getBean(CategoryRepository.class)
+        ));
     }
 
-    private void cleanUp(Collection<CrudRepository> repositories) {
+    private void cleanUp(final Collection<CrudRepository> repositories) {
         repositories.forEach(CrudRepository::deleteAll);
     }
 }

@@ -9,7 +9,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @MySQLGatewayTest
 class CategoryMySQLGatewayTest {
@@ -175,9 +178,11 @@ class CategoryMySQLGatewayTest {
 
         Assertions.assertEquals(0, this.categoryRepository.count());
 
-        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
-        this.categoryRepository.save(CategoryJpaEntity.from(series));
-        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
 
         Assertions.assertEquals(3, this.categoryRepository.count());
 
@@ -228,9 +233,11 @@ class CategoryMySQLGatewayTest {
 
         Assertions.assertEquals(0, this.categoryRepository.count());
 
-        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
-        this.categoryRepository.save(CategoryJpaEntity.from(series));
-        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
 
         Assertions.assertEquals(3, this.categoryRepository.count());
 
@@ -276,9 +283,11 @@ class CategoryMySQLGatewayTest {
 
         Assertions.assertEquals(0, this.categoryRepository.count());
 
-        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
-        this.categoryRepository.save(CategoryJpaEntity.from(series));
-        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
 
         Assertions.assertEquals(3, this.categoryRepository.count());
 
@@ -309,9 +318,11 @@ class CategoryMySQLGatewayTest {
 
         Assertions.assertEquals(0, this.categoryRepository.count());
 
-        this.categoryRepository.save(CategoryJpaEntity.from(filmes));
-        this.categoryRepository.save(CategoryJpaEntity.from(series));
-        this.categoryRepository.save(CategoryJpaEntity.from(documentarios));
+        this.categoryRepository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
 
         Assertions.assertEquals(3, this.categoryRepository.count());
 
@@ -326,5 +337,31 @@ class CategoryMySQLGatewayTest {
         Assertions.assertEquals(expectedTotalElements, actualResult.totalElements());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(documentarios.getId(), actualResult.items().get(0).getId());
+    }
+
+    @Test
+    void givenPrePersistedCategories_WhenCallsExistsByIds_ThenReturnIds() {
+        final Category filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
+        final Category series = Category.newCategory("Series", "Todos assistem", true);
+        final Category documentarios = Category.newCategory("Documentarios", "A categoria mais visualizada", true);
+
+        Assertions.assertEquals(0, this.categoryRepository.count());
+
+        this.categoryRepository.saveAll(List.of(
+                CategoryJpaEntity.from(filmes),
+                CategoryJpaEntity.from(series),
+                CategoryJpaEntity.from(documentarios)
+        ));
+
+        Assertions.assertEquals(3, this.categoryRepository.count());
+
+        final List<CategoryID> expectedIds = List.of(filmes.getId(), series.getId());
+        final List<CategoryID> ids = List.of(filmes.getId(), series.getId(), CategoryID.from("123"));
+
+        final List<CategoryID> actualResult = this.categoryGateway.existsByIds(ids);
+
+        assertThat(actualResult)
+                .hasSize(2)
+                .containsAll(expectedIds);
     }
 }

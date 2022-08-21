@@ -1,6 +1,7 @@
 package codeflix.catalog.admin.infrastructure.category.models;
 
 import codeflix.catalog.admin.JacksonTest;
+import codeflix.catalog.admin.domain._share.utils.InstantUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ class CategoryResponseTest {
         final String expectedName = "Filmes";
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
-        final Instant expectedCreatedAt = Instant.now();
-        final Instant expectedUpdatedAt = Instant.now();
-        final Instant expectedDeletedAt = Instant.now();
+        final Instant expectedCreatedAt = InstantUtils.now();
+        final Instant expectedUpdatedAt = InstantUtils.now();
+        final Instant expectedDeletedAt = InstantUtils.now();
 
         final CategoryResponse response = new CategoryResponse(
                 expectedId,
@@ -37,7 +38,7 @@ class CategoryResponseTest {
                 expectedDeletedAt
         );
 
-        final JsonContent<CategoryResponse> actualJson = json.write(response);
+        final JsonContent<CategoryResponse> actualJson = this.json.write(response);
 
         Assertions.assertThat(actualJson)
                 .hasJsonPath("$.id", expectedId)
@@ -55,9 +56,9 @@ class CategoryResponseTest {
         final String expectedName = "Filmes";
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
-        final Instant expectedCreatedAt = Instant.now();
-        final Instant expectedUpdatedAt = Instant.now();
-        final Instant expectedDeletedAt = Instant.now();
+        final Instant expectedCreatedAt = InstantUtils.now();
+        final Instant expectedUpdatedAt = InstantUtils.now();
+        final Instant expectedDeletedAt = InstantUtils.now();
 
         final String json = """
                 {

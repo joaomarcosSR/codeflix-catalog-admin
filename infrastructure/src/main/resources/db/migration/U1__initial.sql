@@ -1,2 +1,2 @@
 
-nameDROP TABLE category;
+nameDROP TABLE categories;

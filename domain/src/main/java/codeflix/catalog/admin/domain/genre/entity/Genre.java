@@ -46,7 +46,7 @@ public class Genre extends AggregateRoot<GenreID> {
 
     public static Genre newGenre(final String aName, final boolean isActive) {
         final GenreID anId = GenreID.unique();
-        final Instant now = Instant.now();
+        final Instant now = InstantUtils.now();
         final Instant deletedAt = isActive ? null : now;
         return new Genre(anId, aName, isActive, new ArrayList<>(), now, now, deletedAt);
     }

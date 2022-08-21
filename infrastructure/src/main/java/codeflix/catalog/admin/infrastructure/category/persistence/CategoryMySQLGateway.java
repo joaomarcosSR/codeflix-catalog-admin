@@ -10,13 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import static codeflix.catalog.admin.infrastructure.utils.SpecificationUtils.like;
 
-@Service
+@Component
 public class CategoryMySQLGateway implements CategoryGateway {
 
     private final CategoryRepository repository;
@@ -58,10 +60,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
         final Specification<CategoryJpaEntity> specification = Optional.ofNullable(aQuery.terms())
                 .filter(str -> !str.isBlank())
-                .map(term ->
-                        SpecificationUtils.<CategoryJpaEntity>
-                                        like("name", term)
-                                .or(like("description", term)))
+                .map(this::assembleSpecification)
                 .orElse(null);
 
         final Page<CategoryJpaEntity> pageResult = this.repository.findAll(Specification.where(specification), page);
@@ -75,8 +74,25 @@ public class CategoryMySQLGateway implements CategoryGateway {
         );
     }
 
+    @Override
+    public List<CategoryID> existsByIds(final Iterable<CategoryID> categoryIDs) {
+        final List<String> ids = StreamSupport.stream(categoryIDs.spliterator(), false)
+                .map(CategoryID::getValue)
+                .toList();
+
+        return this.repository.existsByIds(ids).stream()
+                .map(CategoryID::from)
+                .toList();
+    }
+
     private Category save(final Category aCategory) {
         return this.repository.save(CategoryJpaEntity.from(aCategory))
                 .toAggregate();
+    }
+
+    private Specification<CategoryJpaEntity> assembleSpecification(final String term) {
+        return SpecificationUtils.<CategoryJpaEntity>
+                        like("name", term)
+                .or(like("description", term));
     }
 }

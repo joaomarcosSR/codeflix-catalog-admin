@@ -1,6 +1,7 @@
 package codeflix.catalog.admin.domain.category.entity;
 
 import codeflix.catalog.admin.domain._share.entity.AggregateRoot;
+import codeflix.catalog.admin.domain._share.utils.InstantUtils;
 import codeflix.catalog.admin.domain._share.validation.ValidationHandler;
 import codeflix.catalog.admin.domain.category.validation.CategoryValidator;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
@@ -13,7 +14,7 @@ public class Category extends AggregateRoot<CategoryID> {
     private String name;
     private String description;
     private boolean active;
-    private Instant createdAt;
+    private final Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
 
@@ -27,18 +28,18 @@ public class Category extends AggregateRoot<CategoryID> {
             final Instant aDeleteDate
     ) {
         super(aId);
-        name = aName;
-        description = aDescription;
-        active = isActive;
-        createdAt = Objects.requireNonNull(aCreationDate, "'createdAt' should not be null");
-        updatedAt = Objects.requireNonNull(aUpdateDate, "'updatedAt' should not be null");
-        deletedAt = aDeleteDate;
+        this.name = aName;
+        this.description = aDescription;
+        this.active = isActive;
+        this.createdAt = Objects.requireNonNull(aCreationDate, "'createdAt' should not be null");
+        this.updatedAt = Objects.requireNonNull(aUpdateDate, "'updatedAt' should not be null");
+        this.deletedAt = aDeleteDate;
     }
 
     public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
         final CategoryID id = CategoryID.unique();
-        Instant now = Instant.now();
-        Instant deletedAt = isActive ? null : now;
+        final Instant now = InstantUtils.now();
+        final Instant deletedAt = isActive ? null : now;
         return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
     }
 
@@ -68,54 +69,52 @@ public class Category extends AggregateRoot<CategoryID> {
     }
 
     public Category activate() {
-        active = true;
-        updatedAt = Instant.now();
-        deletedAt = null;
+        this.active = true;
+        this.updatedAt = InstantUtils.now();
+        this.deletedAt = null;
 
         return this;
     }
 
     public Category deactivate() {
-        if (getDeletedAt() == null) {
-            deletedAt = Instant.now();
-        }
-        active = false;
-        updatedAt = Instant.now();
+        if (this.getDeletedAt() == null) this.deletedAt = InstantUtils.now();
+        this.active = false;
+        this.updatedAt = InstantUtils.now();
 
         return this;
     }
 
     public Category update(final String aName, final String aDescription, final boolean isActive) {
-        if (isActive) activate();
-        else deactivate();
-        name = aName;
-        description = aDescription;
-        updatedAt = Instant.now();
+        if (isActive) this.activate();
+        else this.deactivate();
+        this.name = aName;
+        this.description = aDescription;
+        this.updatedAt = InstantUtils.now();
 
         return this;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public Instant getDeletedAt() {
-        return deletedAt;
+        return this.deletedAt;
     }
 }

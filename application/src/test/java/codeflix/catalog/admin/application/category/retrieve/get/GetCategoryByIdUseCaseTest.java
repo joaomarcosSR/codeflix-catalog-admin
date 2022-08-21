@@ -1,25 +1,25 @@
 package codeflix.catalog.admin.application.category.retrieve.get;
 
+import codeflix.catalog.admin.application.UseCaseTest;
 import codeflix.catalog.admin.domain._share.exceptions.DomainException;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain.category.entity.Category;
 import codeflix.catalog.admin.domain.category.gateway.CategoryGateway;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class GetCategoryByIdUseCaseTest {
+class GetCategoryByIdUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private GetCategoryByIdUseCaseImpl useCase;
@@ -27,9 +27,9 @@ class GetCategoryByIdUseCaseTest {
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    void cleanUp() {
-        Mockito.reset(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(this.categoryGateway);
     }
 
     @Test
@@ -41,9 +41,9 @@ class GetCategoryByIdUseCaseTest {
         final Category aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
         final CategoryID expectedId = aCategory.getId();
 
-        when(categoryGateway.findById(expectedId)).thenReturn(Optional.of(aCategory));
+        when(this.categoryGateway.findById(expectedId)).thenReturn(Optional.of(aCategory));
 
-        final CategoryOutput actualCategory = useCase.execute(expectedId.getValue());
+        final CategoryOutput actualCategory = this.useCase.execute(expectedId.getValue());
 
         Assertions.assertEquals(expectedId, actualCategory.id());
         Assertions.assertEquals(expectedName, actualCategory.name());
@@ -59,10 +59,10 @@ class GetCategoryByIdUseCaseTest {
         final String expectedErrorMessage = "Category with ID 123 was not found";
         final CategoryID expectedId = CategoryID.from("123");
 
-        when(categoryGateway.findById(expectedId)).thenReturn(Optional.empty());
+        when(this.categoryGateway.findById(expectedId)).thenReturn(Optional.empty());
 
         final DomainException actualException =
-                Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(expectedId.getValue()));
+                Assertions.assertThrows(NotFoundException.class, () -> this.useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }
@@ -73,10 +73,10 @@ class GetCategoryByIdUseCaseTest {
         final String expectedErrorMessage = "Gateway error.";
         final CategoryID expectedId = aCategory.getId();
 
-        when(categoryGateway.findById(expectedId)).thenThrow(new IllegalArgumentException(expectedErrorMessage));
+        when(this.categoryGateway.findById(expectedId)).thenThrow(new IllegalArgumentException(expectedErrorMessage));
 
         final IllegalArgumentException actualException =
-                Assertions.assertThrows(IllegalArgumentException.class, () -> useCase.execute(expectedId.getValue()));
+                Assertions.assertThrows(IllegalArgumentException.class, () -> this.useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }
