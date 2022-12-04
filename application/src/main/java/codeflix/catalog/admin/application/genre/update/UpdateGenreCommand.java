@@ -14,6 +14,6 @@ public record UpdateGenreCommand(
             final Boolean isActive,
             final List<String> categories
     ) {
-        return new UpdateGenreCommand(anId, aName, isActive != null ? isActive : true, categories);
+        return new UpdateGenreCommand(anId, aName, isActive == null || isActive, categories);
     }
 }

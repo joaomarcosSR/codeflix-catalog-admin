@@ -13,6 +13,6 @@ public record CreateGenreCommand(
             final Boolean isActive,
             final List<String> categories
     ) {
-        return new CreateGenreCommand(aName, isActive != null ? isActive : true, categories);
+        return new CreateGenreCommand(aName, isActive == null || isActive, categories);
     }
 }

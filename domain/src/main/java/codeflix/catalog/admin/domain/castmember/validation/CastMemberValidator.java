@@ -1,28 +1,30 @@
-package codeflix.catalog.admin.domain.category.validation;
+package codeflix.catalog.admin.domain.castmember.validation;
 
 import codeflix.catalog.admin.domain._share.validation.Error;
 import codeflix.catalog.admin.domain._share.validation.ValidationHandler;
 import codeflix.catalog.admin.domain._share.validation.Validator;
-import codeflix.catalog.admin.domain.category.entity.Category;
+import codeflix.catalog.admin.domain.castmember.entity.CastMember;
 
-public class CategoryValidator extends Validator {
+public class CastMemberValidator extends Validator {
 
     private static final int NAME_MIN_VALUE = 3;
     private static final int NAME_MAX_VALUE = 255;
-    private final Category category;
 
-    public CategoryValidator(final Category aCategory, final ValidationHandler aHandler) {
+    private final CastMember castMember;
+
+    public CastMemberValidator(final CastMember castMember, final ValidationHandler aHandler) {
         super(aHandler);
-        this.category = aCategory;
+        this.castMember = castMember;
     }
 
     @Override
     public void validate() {
         this.checkNameConstraints();
+        this.checkTypeConstraints();
     }
 
     private void checkNameConstraints() {
-        final String name = this.category.getName();
+        final String name = this.castMember.getName();
         if (name == null) {
             this.validationHandler().append(new Error("'name' should not be null"));
             return;
@@ -36,5 +38,9 @@ public class CategoryValidator extends Validator {
         final int length = name.trim().length();
         if (length < NAME_MIN_VALUE || length > NAME_MAX_VALUE)
             this.validationHandler().append(new Error("'name' must be between 3 and 255 characters"));
+    }
+
+    private void checkTypeConstraints() {
+        if (this.castMember.getType() == null) this.validationHandler().append(new Error("'type' should not be null"));
     }
 }
