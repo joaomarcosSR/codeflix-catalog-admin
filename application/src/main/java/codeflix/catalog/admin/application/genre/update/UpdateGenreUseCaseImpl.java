@@ -42,9 +42,7 @@ public class UpdateGenreUseCaseImpl extends UpdateGenreUseCase {
         notification.validate(() -> aGenre.update(aName, isActive, categories));
 
         if (notification.hasError())
-            throw new NotificationException(
-                    "Could not create Aggregate Genre %s".formatted(anId.getValue()), notification
-            );
+            throw new NotificationException("Could not update Aggregate Genre %s".formatted(anId.getValue()), notification);
 
         return UpdateGenreOutput.from(this.genreGateway.update(aGenre));
     }

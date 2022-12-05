@@ -1,8 +1,13 @@
 package codeflix.catalog.admin.e2e;
 
 import codeflix.catalog.admin.domain._share.value.object.Identifier;
+import codeflix.catalog.admin.domain.castmember.enums.CastMemberType;
+import codeflix.catalog.admin.domain.castmember.value.object.CastMemberID;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 import codeflix.catalog.admin.domain.genre.value.object.GenreID;
+import codeflix.catalog.admin.infrastructure.castmember.models.CastMemberResponse;
+import codeflix.catalog.admin.infrastructure.castmember.models.CreateCastMemberRequest;
+import codeflix.catalog.admin.infrastructure.castmember.models.UpdateCastMemberRequest;
 import codeflix.catalog.admin.infrastructure.category.models.CategoryResponse;
 import codeflix.catalog.admin.infrastructure.category.models.CreateCategoryRequest;
 import codeflix.catalog.admin.infrastructure.category.models.UpdateCategoryRequest;
@@ -94,6 +99,48 @@ public interface MockDsl {
     }
 
     /**
+     * Cast Member
+     */
+    default ResultActions deleteACastMember(final CastMemberID anId) throws Exception {
+        return this.delete("/cast_members/", anId);
+    }
+
+    default CastMemberID givenACastMember(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        final var actualId = this.given("/cast_members", aRequestBody);
+        return CastMemberID.from(actualId);
+    }
+
+    default ResultActions givenACastMemberResult(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        return this.givenResult("/cast_members", aRequestBody);
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage) throws Exception {
+        return this.listCastMembers(page, perPage, "", "", "");
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage, final String search) throws Exception {
+        return this.listCastMembers(page, perPage, search, "", "");
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
+        return this.list("/cast_members", page, perPage, search, sort, direction);
+    }
+
+    default CastMemberResponse retrieveACastMember(final CastMemberID anId) throws Exception {
+        return this.retrieve("/cast_members/", anId, CastMemberResponse.class);
+    }
+
+    default ResultActions retrieveACastMemberResult(final CastMemberID anId) throws Exception {
+        return this.retrieveResult("/cast_members/", anId);
+    }
+
+    default ResultActions updateACastMember(final CastMemberID anId, final String aName, final CastMemberType aType) throws Exception {
+        return this.update("/cast_members/", anId, new UpdateCastMemberRequest(aName, aType));
+    }
+
+    /**
      * Auxiliaries
      */
 
@@ -154,6 +201,22 @@ public interface MockDsl {
         final var aRequest = put(url + anId.getValue())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Json.writeValueAsString(aRequestBody));
+
+        return this.mvc().perform(aRequest);
+    }
+
+    private ResultActions givenResult(final String url, final Object body) throws Exception {
+        final var aRequest = post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Json.writeValueAsString(body));
+
+        return this.mvc().perform(aRequest);
+    }
+
+    private ResultActions retrieveResult(final String url, final Identifier anId) throws Exception {
+        final var aRequest = get(url + anId.getValue())
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
 
         return this.mvc().perform(aRequest);
     }
