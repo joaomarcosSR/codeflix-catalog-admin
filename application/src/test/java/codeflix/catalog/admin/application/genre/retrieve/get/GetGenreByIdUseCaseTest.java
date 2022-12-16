@@ -74,17 +74,12 @@ class GetGenreByIdUseCaseTest extends UseCaseTest {
                 .thenReturn(Optional.empty());
 
         // when
+        final String expectedIdValue = expectedId.getValue();
         final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
-            this.useCase.execute(expectedId.getValue());
+            this.useCase.execute(expectedIdValue);
         });
 
         // then
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
-    }
-
-    private List<String> asString(final List<CategoryID> ids) {
-        return ids.stream()
-                .map(CategoryID::getValue)
-                .toList();
     }
 }

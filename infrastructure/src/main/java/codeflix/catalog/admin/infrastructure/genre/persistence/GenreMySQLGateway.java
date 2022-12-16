@@ -12,8 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Component
 public class GenreMySQLGateway implements GenreGateway {
@@ -77,5 +79,16 @@ public class GenreMySQLGateway implements GenreGateway {
 
     private Specification<GenreJpaEntity> assembleSpecification(final String terms) {
         return SpecificationUtils.like("name", terms);
+    }
+
+    @Override
+    public List<GenreID> existsByIds(final Iterable<GenreID> genres) {
+        final List<String> ids = StreamSupport.stream(genres.spliterator(), false)
+                .map(GenreID::getValue)
+                .toList();
+
+        return this.repository.existsByIds(ids).stream()
+                .map(GenreID::from)
+                .toList();
     }
 }

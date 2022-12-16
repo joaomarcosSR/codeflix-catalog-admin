@@ -19,7 +19,7 @@ public class Category extends AggregateRoot<CategoryID> {
     private Instant deletedAt;
 
     private Category(
-            final CategoryID aId,
+            final CategoryID anId,
             final String aName,
             final String aDescription,
             final boolean isActive,
@@ -27,7 +27,7 @@ public class Category extends AggregateRoot<CategoryID> {
             final Instant aUpdateDate,
             final Instant aDeleteDate
     ) {
-        super(aId);
+        super(anId);
         this.name = aName;
         this.description = aDescription;
         this.active = isActive;
@@ -43,8 +43,20 @@ public class Category extends AggregateRoot<CategoryID> {
         return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
     }
 
+    public static Category with(final Category aCategory) {
+        return new Category(
+                aCategory.getId(),
+                aCategory.getName(),
+                aCategory.getDescription(),
+                aCategory.isActive(),
+                aCategory.getCreatedAt(),
+                aCategory.getUpdatedAt(),
+                aCategory.getDeletedAt()
+        );
+    }
+
     public static Category with(
-            final CategoryID aId,
+            final CategoryID anId,
             final String aName,
             final String aDescription,
             final boolean isActive,
@@ -53,7 +65,7 @@ public class Category extends AggregateRoot<CategoryID> {
             final Instant aDeleteDate
     ) {
         return new Category(
-                aId,
+                anId,
                 aName,
                 aDescription,
                 isActive,

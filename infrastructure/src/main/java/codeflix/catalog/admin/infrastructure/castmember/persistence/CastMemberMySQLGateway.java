@@ -12,8 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Component
 public class CastMemberMySQLGateway implements CastMemberGateway {
@@ -78,5 +80,16 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     private Specification<CastMemberJpaEntity> assembleSpecification(final String term) {
         return SpecificationUtils.like("name", term);
+    }
+
+    @Override
+    public List<CastMemberID> existsByIds(final Iterable<CastMemberID> members) {
+        final List<String> ids = StreamSupport.stream(members.spliterator(), false)
+                .map(CastMemberID::getValue)
+                .toList();
+
+        return this.castMemberRepository.existsByIds(ids).stream()
+                .map(CastMemberID::from)
+                .toList();
     }
 }

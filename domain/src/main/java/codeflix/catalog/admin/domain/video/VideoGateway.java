@@ -5,9 +5,9 @@ import codeflix.catalog.admin.domain._share.pagination.Pagination;
 import java.util.Optional;
 
 public interface VideoGateway {
-    Video create(Video aGenre);
+    Video create(Video aVideo);
 
-    Video update(Video aGenre);
+    Video update(Video aVideo);
 
     void deleteById(VideoID anId);
 
