@@ -1,6 +1,6 @@
 package codeflix.catalog.admin.application.video.retrieve.list;
 
-import codeflix.catalog.admin.domain.video.Video;
+import codeflix.catalog.admin.domain.video.VideoPreview;
 
 import java.time.Instant;
 
@@ -12,13 +12,13 @@ public record VideoListOutput(
         Instant updatedAt
 ) {
 
-    public static VideoListOutput from(final Video aVideo) {
+    public static VideoListOutput from(final VideoPreview aVideo) {
         return new VideoListOutput(
-                aVideo.getId().getValue(),
-                aVideo.getTitle(),
-                aVideo.getDescription(),
-                aVideo.getCreatedAt(),
-                aVideo.getUpdatedAt()
+                aVideo.id(),
+                aVideo.title(),
+                aVideo.description(),
+                aVideo.createdAt(),
+                aVideo.updatedAt()
         );
     }
 }

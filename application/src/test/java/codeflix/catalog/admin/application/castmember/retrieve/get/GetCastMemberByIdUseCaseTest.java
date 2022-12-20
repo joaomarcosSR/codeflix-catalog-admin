@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.castmember.retrieve.get;
 
-import codeflix.catalog.admin.application.Fixture;
 import codeflix.catalog.admin.application.UseCaseTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;
 import codeflix.catalog.admin.domain.castmember.gateway.CastMemberGateway;

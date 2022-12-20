@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.castmember.retrieve.get;
 
-import codeflix.catalog.admin.Fixture;
 import codeflix.catalog.admin.IntegrationTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;
 import codeflix.catalog.admin.domain.castmember.gateway.CastMemberGateway;
@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @IntegrationTest
-public class GetCastMemberByIdUseCaseIT {
+class GetCastMemberByIdUseCaseIT {
 
     @Autowired
     private GetCastMemberByIdUseCase useCase;

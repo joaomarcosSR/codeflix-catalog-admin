@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.video.retrieve.get;
 
-import codeflix.catalog.admin.application.Fixture;
 import codeflix.catalog.admin.application.UseCaseTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain.video.Video;
 import codeflix.catalog.admin.domain.video.VideoGateway;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static codeflix.catalog.admin.application.Fixture.Videos.audioVideo;
-import static codeflix.catalog.admin.application.Fixture.Videos.image;
+import static codeflix.catalog.admin.domain.Fixture.Videos.audioVideo;
+import static codeflix.catalog.admin.domain.Fixture.Videos.image;
 import static org.mockito.Mockito.when;
 
 class GetVideoByIdUseCaseTest extends UseCaseTest {

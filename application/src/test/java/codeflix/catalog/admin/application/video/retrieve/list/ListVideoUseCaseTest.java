@@ -1,10 +1,10 @@
 package codeflix.catalog.admin.application.video.retrieve.list;
 
-import codeflix.catalog.admin.application.Fixture;
 import codeflix.catalog.admin.application.UseCaseTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
-import codeflix.catalog.admin.domain.video.Video;
 import codeflix.catalog.admin.domain.video.VideoGateway;
+import codeflix.catalog.admin.domain.video.VideoPreview;
 import codeflix.catalog.admin.domain.video.VideoSearchQuery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,8 @@ class ListVideoUseCaseTest extends UseCaseTest {
     void givenAValidQuery_whenCallsListVideos_shouldReturnVideos() {
         // given
         final var videos = List.of(
-                Fixture.video(),
-                Fixture.video()
+                VideoPreview.from(Fixture.video()),
+                VideoPreview.from(Fixture.video())
         );
 
         final var expectedPage = 0;
@@ -66,7 +66,10 @@ class ListVideoUseCaseTest extends UseCaseTest {
                 expectedPerPage,
                 expectedTerms,
                 expectedSort,
-                expectedDirection
+                expectedDirection,
+                null,
+                null,
+                null
         );
 
         // when
@@ -85,7 +88,7 @@ class ListVideoUseCaseTest extends UseCaseTest {
     @Test
     void givenAValidQuery_whenCallsListVideosAndResultIsEmpty_shouldReturnGenres() {
         // given
-        final var videos = List.<Video>of();
+        final var videos = List.<VideoPreview>of();
 
         final var expectedPage = 0;
         final var expectedPerPage = 10;
@@ -113,7 +116,10 @@ class ListVideoUseCaseTest extends UseCaseTest {
                 expectedPerPage,
                 expectedTerms,
                 expectedSort,
-                expectedDirection
+                expectedDirection,
+                null,
+                null,
+                null
         );
 
         // when
@@ -148,7 +154,10 @@ class ListVideoUseCaseTest extends UseCaseTest {
                 expectedPerPage,
                 expectedTerms,
                 expectedSort,
-                expectedDirection
+                expectedDirection,
+                null,
+                null,
+                null
         );
 
         // when

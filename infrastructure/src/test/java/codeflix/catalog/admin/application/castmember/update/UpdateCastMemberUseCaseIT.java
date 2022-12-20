@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.castmember.update;
 
-import codeflix.catalog.admin.Fixture;
 import codeflix.catalog.admin.IntegrationTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain._share.exceptions.NotificationException;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;

@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static codeflix.catalog.admin.Fixture.CastMembers.type;
-import static codeflix.catalog.admin.Fixture.name;
+import static codeflix.catalog.admin.domain.Fixture.CastMembers.type;
+import static codeflix.catalog.admin.domain.Fixture.name;
 
 @MySQLGatewayTest
 class CastMemberMySQLGatewayTest {

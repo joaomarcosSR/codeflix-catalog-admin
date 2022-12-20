@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.video.create;
 
-import codeflix.catalog.admin.application.Fixture;
 import codeflix.catalog.admin.application.UseCaseTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.InternalErrorException;
 import codeflix.catalog.admin.domain._share.exceptions.NotificationException;
 import codeflix.catalog.admin.domain.castmember.gateway.CastMemberGateway;
@@ -10,6 +10,7 @@ import codeflix.catalog.admin.domain.category.gateway.CategoryGateway;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
 import codeflix.catalog.admin.domain.genre.gateway.GenreGateway;
 import codeflix.catalog.admin.domain.genre.value.object.GenreID;
+import codeflix.catalog.admin.domain.resource.Resource;
 import codeflix.catalog.admin.domain.video.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
@@ -1007,18 +1011,20 @@ class CreateVideoUseCaseTest extends UseCaseTest {
 
     private void mockImageMedia() {
         when(this.mediaResourceGateway.storeImage(any(), any())).thenAnswer(t -> {
-            final var resource = t.getArgument(1, Resource.class);
-            return ImageMedia.with(UUID.randomUUID().toString(), resource.name(), "/img");
+            final var videoResource = t.getArgument(1, VideoResource.class);
+            final Resource resource = videoResource.resource();
+            return ImageMedia.with(resource.checksum(), resource.name(), "/img");
         });
     }
 
     private void mockAudioVideoMedia() {
         when(this.mediaResourceGateway.storeAudioVideo(any(), any())).thenAnswer(t -> {
-            final var resource = t.getArgument(1, Resource.class);
+            final var videoResource = t.getArgument(1, VideoResource.class);
+            final Resource resource = videoResource.resource();
             return AudioVideoMedia.with(
-                    UUID.randomUUID().toString(),
+                    resource.checksum(),
                     resource.name(),
-                    "/img"
+                    "/video"
             );
         });
     }

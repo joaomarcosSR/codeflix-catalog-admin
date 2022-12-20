@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.e2e.castmember;
 
 import codeflix.catalog.admin.E2ETest;
-import codeflix.catalog.admin.Fixture;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain.castmember.enums.CastMemberType;
 import codeflix.catalog.admin.domain.castmember.value.object.CastMemberID;
 import codeflix.catalog.admin.e2e.MockDsl;

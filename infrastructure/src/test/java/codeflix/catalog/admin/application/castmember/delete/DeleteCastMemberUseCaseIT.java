@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.castmember.delete;
 
-import codeflix.catalog.admin.Fixture;
 import codeflix.catalog.admin.IntegrationTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;
 import codeflix.catalog.admin.domain.castmember.gateway.CastMemberGateway;
 import codeflix.catalog.admin.domain.castmember.value.object.CastMemberID;

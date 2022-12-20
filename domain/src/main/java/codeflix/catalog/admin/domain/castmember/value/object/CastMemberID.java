@@ -1,28 +1,23 @@
 package codeflix.catalog.admin.domain.castmember.value.object;
 
+import codeflix.catalog.admin.domain._share.utils.IdUtils;
 import codeflix.catalog.admin.domain._share.value.object.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class CastMemberID extends Identifier {
     private final String value;
 
     private CastMemberID(final String anId) {
-        Objects.requireNonNull(anId);
-        this.value = anId;
+        this.value = Objects.requireNonNull(anId);
     }
 
     public static CastMemberID unique() {
-        return CastMemberID.from(UUID.randomUUID());
+        return CastMemberID.from(IdUtils.uuid());
     }
 
     public static CastMemberID from(final String anId) {
-        return new CastMemberID(anId);
-    }
-
-    public static CastMemberID from(final UUID anId) {
-        return new CastMemberID(anId.toString().toLowerCase());
+        return new CastMemberID(anId.toLowerCase());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package codeflix.catalog.admin.application.castmember.retrieve.list;
 
-import codeflix.catalog.admin.application.Fixture;
 import codeflix.catalog.admin.application.UseCaseTest;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
 import codeflix.catalog.admin.domain._share.pagination.SearchQuery;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;

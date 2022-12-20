@@ -1,28 +1,23 @@
 package codeflix.catalog.admin.domain.genre.value.object;
 
+import codeflix.catalog.admin.domain._share.utils.IdUtils;
 import codeflix.catalog.admin.domain._share.value.object.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class GenreID extends Identifier {
     private final String value;
 
     private GenreID(final String value) {
-        Objects.requireNonNull(value);
-        this.value = value;
+        this.value = Objects.requireNonNull(value);
     }
 
     public static GenreID unique() {
-        return GenreID.from(UUID.randomUUID());
+        return GenreID.from(IdUtils.uuid());
     }
 
     public static GenreID from(final String anId) {
-        return new GenreID(anId);
-    }
-
-    public static GenreID from(final UUID anId) {
-        return new GenreID(anId.toString().toLowerCase());
+        return new GenreID(anId.toLowerCase());
     }
 
     @Override

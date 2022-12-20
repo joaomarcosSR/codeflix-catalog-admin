@@ -19,6 +19,8 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static codeflix.catalog.admin.domain.video.VideoMediaType.*;
+
 public class CreateVideoUseCaseImpl extends CreateVideoUseCase {
     private final VideoGateway videoGateway;
     private final CategoryGateway categoryGateway;
@@ -79,19 +81,19 @@ public class CreateVideoUseCaseImpl extends CreateVideoUseCase {
 
         try {
             final AudioVideoMedia aVideoMedia = aCommand.getVideo()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, VIDEO)))
                     .orElse(null);
             final AudioVideoMedia aTrailer = aCommand.getTrailer()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, TRAILER)))
                     .orElse(null);
             final ImageMedia aBanner = aCommand.getBanner()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, BANNER)))
                     .orElse(null);
             final ImageMedia aThumbnail = aCommand.getThumbnail()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL)))
                     .orElse(null);
             final ImageMedia aThumbnailHalf = aCommand.getThumbnailHalf()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL_HALF)))
                     .orElse(null);
 
             return this.videoGateway.create(

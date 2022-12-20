@@ -1,10 +1,11 @@
-package codeflix.catalog.admin.application;
+package codeflix.catalog.admin.domain;
 
 import codeflix.catalog.admin.domain._share.utils.IdUtils;
 import codeflix.catalog.admin.domain.castmember.entity.CastMember;
 import codeflix.catalog.admin.domain.castmember.enums.CastMemberType;
 import codeflix.catalog.admin.domain.category.entity.Category;
 import codeflix.catalog.admin.domain.genre.entity.Genre;
+import codeflix.catalog.admin.domain.resource.Resource;
 import codeflix.catalog.admin.domain.video.*;
 import com.github.javafaker.Faker;
 
@@ -146,11 +147,9 @@ public final class Fixture {
                     Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
                     Case($(), "image/jpg")
             );
-
-            final String checksum = IdUtils.uuid();
             final byte[] content = "Content".getBytes();
 
-            return Resource.with(content, checksum, contentType, type);
+            return Resource.with(IdUtils.uuid(), content, contentType, type.name().toLowerCase());
         }
 
         public static String description() {

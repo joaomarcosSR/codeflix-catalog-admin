@@ -1,7 +1,6 @@
 package codeflix.catalog.admin.infrastructure.api;
 
 import codeflix.catalog.admin.ControllerTest;
-import codeflix.catalog.admin.Fixture;
 import codeflix.catalog.admin.application.castmember.create.CreateCastMemberOutput;
 import codeflix.catalog.admin.application.castmember.create.CreateCastMemberUseCaseImpl;
 import codeflix.catalog.admin.application.castmember.delete.DeleteCastMemberUseCaseImpl;
@@ -11,6 +10,7 @@ import codeflix.catalog.admin.application.castmember.retrieve.list.CastMemberLis
 import codeflix.catalog.admin.application.castmember.retrieve.list.ListCastMembersUseCaseImpl;
 import codeflix.catalog.admin.application.castmember.update.UpdateCastMemberOutput;
 import codeflix.catalog.admin.application.castmember.update.UpdateCastMemberUseCaseImpl;
+import codeflix.catalog.admin.domain.Fixture;
 import codeflix.catalog.admin.domain._share.exceptions.NotFoundException;
 import codeflix.catalog.admin.domain._share.exceptions.NotificationException;
 import codeflix.catalog.admin.domain._share.pagination.Pagination;
