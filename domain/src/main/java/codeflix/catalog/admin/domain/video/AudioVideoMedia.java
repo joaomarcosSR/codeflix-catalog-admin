@@ -5,7 +5,7 @@ import codeflix.catalog.admin.domain._share.value.object.ValueObject;
 
 import java.util.Objects;
 
-import static codeflix.catalog.admin.domain.video.MediaStatus.PENDING;
+import static codeflix.catalog.admin.domain.video.MediaStatus.*;
 
 public class AudioVideoMedia extends ValueObject {
     private final String id;
@@ -95,5 +95,27 @@ public class AudioVideoMedia extends ValueObject {
     @Override
     public int hashCode() {
         return Objects.hash(this.checksum, this.rawLocation);
+    }
+
+    public AudioVideoMedia processing() {
+        return AudioVideoMedia.with(
+                this.id(),
+                this.checksum(),
+                this.name(),
+                this.rawLocation(),
+                this.encodedLocation(),
+                PROCESSING
+        );
+    }
+
+    public AudioVideoMedia completed(final String encodedPath) {
+        return AudioVideoMedia.with(
+                this.id(),
+                this.checksum(),
+                this.name(),
+                this.rawLocation(),
+                encodedPath,
+                COMPLETED
+        );
     }
 }

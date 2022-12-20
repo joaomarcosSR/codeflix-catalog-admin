@@ -14,6 +14,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static codeflix.catalog.admin.domain.video.VideoMediaType.TRAILER;
+import static codeflix.catalog.admin.domain.video.VideoMediaType.VIDEO;
+
 public class Video extends AggregateRoot<VideoID> {
     private String title;
     private String description;
@@ -331,5 +334,17 @@ public class Video extends AggregateRoot<VideoID> {
 
     private <T> Set<T> convertToUnmodifiableOrEmptySet(final Set<T> values) {
         return values != null ? Collections.unmodifiableSet(values) : Collections.emptySet();
+    }
+
+    public Video processing(final VideoMediaType aType) {
+        if (VIDEO == aType) this.getVideo().ifPresent(media -> this.setVideo(media.processing()));
+        else if (TRAILER == aType) this.getTrailer().ifPresent(media -> this.setTrailer(media.processing()));
+        return this;
+    }
+
+    public Video completed(final VideoMediaType aType, final String encodedPath) {
+        if (VIDEO == aType) this.getVideo().ifPresent(media -> this.setVideo(media.completed(encodedPath)));
+        else if (TRAILER == aType) this.getTrailer().ifPresent(media -> this.setTrailer(media.completed(encodedPath)));
+        return this;
     }
 }
