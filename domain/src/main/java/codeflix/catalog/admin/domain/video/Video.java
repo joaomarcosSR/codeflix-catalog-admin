@@ -5,17 +5,16 @@ import codeflix.catalog.admin.domain._share.utils.InstantUtils;
 import codeflix.catalog.admin.domain._share.validation.ValidationHandler;
 import codeflix.catalog.admin.domain.castmember.value.object.CastMemberID;
 import codeflix.catalog.admin.domain.category.value.object.CategoryID;
+import codeflix.catalog.admin.domain.events.DomainEvent;
 import codeflix.catalog.admin.domain.genre.value.object.GenreID;
 
 import java.time.Instant;
 import java.time.Year;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static codeflix.catalog.admin.domain.video.VideoMediaType.TRAILER;
 import static codeflix.catalog.admin.domain.video.VideoMediaType.VIDEO;
+import static java.util.Collections.emptyList;
 
 public class Video extends AggregateRoot<VideoID> {
     private String title;
@@ -43,6 +42,7 @@ public class Video extends AggregateRoot<VideoID> {
 
     private Video(
             final VideoID anId,
+            final List<DomainEvent> domainEvents,
             final String aTitle,
             final String aDescription,
             final Year aLaunchedYear,
@@ -61,7 +61,7 @@ public class Video extends AggregateRoot<VideoID> {
             final Set<GenreID> genres,
             final Set<CastMemberID> members
     ) {
-        super(anId);
+        super(anId, domainEvents);
         this.title = aTitle;
         this.description = aDescription;
         this.launchedAt = aLaunchedYear;
@@ -97,6 +97,7 @@ public class Video extends AggregateRoot<VideoID> {
         final VideoID anId = VideoID.unique();
         return new Video(
                 anId,
+                emptyList(),
                 aTitle,
                 aDescription,
                 aLaunchedYear,
@@ -120,6 +121,7 @@ public class Video extends AggregateRoot<VideoID> {
     public static Video with(final Video aVideo) {
         return new Video(
                 aVideo.getId(),
+                aVideo.getDomainEvents(),
                 aVideo.getTitle(),
                 aVideo.getDescription(),
                 aVideo.getLaunchedAt(),
@@ -162,6 +164,7 @@ public class Video extends AggregateRoot<VideoID> {
     ) {
         return new Video(
                 anId,
+                emptyList(),
                 aTitle,
                 aDescription,
                 aLaunchedYear,
