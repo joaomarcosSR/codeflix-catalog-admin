@@ -97,15 +97,15 @@ public class CreateVideoUseCaseImpl extends CreateVideoUseCase {
                     .orElse(null);
 
             return this.videoGateway.create(
-                    aVideo.setVideo(aVideoMedia)
-                            .setTrailer(aTrailer)
-                            .setBanner(aBanner)
-                            .setThumbnail(aThumbnail)
-                            .setThumbnailHalf(aThumbnailHalf)
+                    aVideo.updateVideoMedia(aVideoMedia)
+                            .updateTrailerMedia(aTrailer)
+                            .updateBannerMedia(aBanner)
+                            .updateThumbnailMedia(aThumbnail)
+                            .updateThumbnailHalfMedia(aThumbnailHalf)
             );
-        } catch (final Throwable t) {
+        } catch (final Exception e) {
             this.mediaResourceGateway.clearResources(anId);
-            throw InternalErrorException.with("An error on create video was observed [videoId:%s]".formatted(anId.getValue()), t);
+            throw InternalErrorException.with("An error on create video was observed [videoId:%s]".formatted(anId.getValue()), e);
         }
     }
 

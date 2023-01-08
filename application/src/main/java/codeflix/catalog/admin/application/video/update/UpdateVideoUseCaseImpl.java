@@ -100,14 +100,14 @@ public class UpdateVideoUseCaseImpl extends UpdateVideoUseCase {
                     .orElse(null);
 
             return this.videoGateway.update(
-                    aVideo.setVideo(aVideoMedia)
-                            .setTrailer(aTrailer)
-                            .setBanner(aBanner)
-                            .setThumbnail(aThumbnail)
-                            .setThumbnailHalf(aThumbnailHalf)
+                    aVideo.updateVideoMedia(aVideoMedia)
+                            .updateTrailerMedia(aTrailer)
+                            .updateBannerMedia(aBanner)
+                            .updateThumbnailMedia(aThumbnail)
+                            .updateThumbnailHalfMedia(aThumbnailHalf)
             );
-        } catch (final Throwable t) {
-            throw InternalErrorException.with("An error on update video was observed [videoId:%s]".formatted(anId.getValue()), t);
+        } catch (final Exception e) {
+            throw InternalErrorException.with("An error on update video was observed [videoId:%s]".formatted(anId.getValue()), e);
         }
     }
 

@@ -68,11 +68,11 @@ class GetVideoByIdUseCaseTest extends UseCaseTest {
                         expectedGenres,
                         expectedMembers
                 )
-                .setVideo(expectedVideo)
-                .setTrailer(expectedTrailer)
-                .setBanner(expectedBanner)
-                .setThumbnail(expectedThumb)
-                .setThumbnailHalf(expectedThumbHalf);
+                .updateVideoMedia(expectedVideo)
+                .updateTrailerMedia(expectedTrailer)
+                .updateBannerMedia(expectedBanner)
+                .updateThumbnailMedia(expectedThumb)
+                .updateThumbnailHalfMedia(expectedThumbHalf);
 
         final var expectedId = aVideo.getId();
 
@@ -114,9 +114,10 @@ class GetVideoByIdUseCaseTest extends UseCaseTest {
                 .thenReturn(Optional.empty());
 
         // when
+        final String expectedIdValue = expectedId.getValue();
         final var actualError = Assertions.assertThrows(
                 NotFoundException.class,
-                () -> this.useCase.execute(expectedId.getValue())
+                () -> this.useCase.execute(expectedIdValue)
         );
 
         // then

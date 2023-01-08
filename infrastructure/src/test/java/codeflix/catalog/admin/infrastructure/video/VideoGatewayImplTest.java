@@ -113,11 +113,11 @@ class VideoGatewayImplTest {
                         expectedGenres,
                         expectedMembers
                 )
-                .setVideo(expectedVideo)
-                .setTrailer(expectedTrailer)
-                .setBanner(expectedBanner)
-                .setThumbnail(expectedThumb)
-                .setThumbnailHalf(expectedThumbHalf);
+                .updateVideoMedia(expectedVideo)
+                .updateTrailerMedia(expectedTrailer)
+                .updateBannerMedia(expectedBanner)
+                .updateThumbnailMedia(expectedThumb)
+                .updateThumbnailHalfMedia(expectedThumbHalf);
 
         // when
         final var actualVideo = this.videoGateway.create(aVideo);
@@ -287,11 +287,11 @@ class VideoGatewayImplTest {
                         expectedGenres,
                         expectedMembers
                 )
-                .setVideo(expectedVideo)
-                .setTrailer(expectedTrailer)
-                .setBanner(expectedBanner)
-                .setThumbnail(expectedThumb)
-                .setThumbnailHalf(expectedThumbHalf);
+                .updateVideoMedia(expectedVideo)
+                .updateTrailerMedia(expectedTrailer)
+                .updateBannerMedia(expectedBanner)
+                .updateThumbnailMedia(expectedThumb)
+                .updateThumbnailHalfMedia(expectedThumbHalf);
 
         // when
         final var actualVideo = this.videoGateway.update(updatedVideo);
@@ -435,11 +435,11 @@ class VideoGatewayImplTest {
                                 expectedGenres,
                                 expectedMembers
                         )
-                        .setVideo(expectedVideo)
-                        .setTrailer(expectedTrailer)
-                        .setBanner(expectedBanner)
-                        .setThumbnail(expectedThumb)
-                        .setThumbnailHalf(expectedThumbHalf)
+                        .updateVideoMedia(expectedVideo)
+                        .updateTrailerMedia(expectedTrailer)
+                        .updateBannerMedia(expectedBanner)
+                        .updateThumbnailMedia(expectedThumb)
+                        .updateThumbnailHalfMedia(expectedThumbHalf)
         );
 
         // when

@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Collections.emptyList;
-
 public abstract class Entity<ID extends Identifier> {
 
     protected final ID id;
@@ -19,7 +17,7 @@ public abstract class Entity<ID extends Identifier> {
 
     protected Entity(final ID id, final List<DomainEvent> domainEvents) {
         this.id = Objects.requireNonNull(id, "'id' should not be null");
-        this.domainEvents = new ArrayList<>(domainEvents == null ? emptyList() : domainEvents);
+        this.domainEvents = new ArrayList<>(domainEvents == null ? new ArrayList<>() : new ArrayList<>(domainEvents));
     }
 
     public abstract void validate(ValidationHandler aHandler);
@@ -42,7 +40,7 @@ public abstract class Entity<ID extends Identifier> {
     public void registerEvent(final DomainEvent event) {
         if (event == null) return;
 
-        this.getDomainEvents().add(event);
+        this.domainEvents.add(event);
     }
 
     @Override

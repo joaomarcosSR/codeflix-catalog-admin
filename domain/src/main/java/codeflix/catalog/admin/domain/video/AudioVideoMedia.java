@@ -118,4 +118,8 @@ public class AudioVideoMedia extends ValueObject {
                 COMPLETED
         );
     }
+
+    public boolean isPendingEncode() {
+        return PENDING == this.status;
+    }
 }

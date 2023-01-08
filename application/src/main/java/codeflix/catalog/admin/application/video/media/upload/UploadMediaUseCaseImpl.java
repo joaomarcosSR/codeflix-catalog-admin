@@ -22,11 +22,12 @@ public class UploadMediaUseCaseImpl extends UploadMediaUseCase {
                 .orElseThrow(() -> this.notFound(anId));
 
         switch (videoResource.type()) {
-            case VIDEO -> aVideo.setVideo(this.mediaResourceGateway.storeAudioVideo(anId, videoResource));
-            case TRAILER -> aVideo.setTrailer(this.mediaResourceGateway.storeAudioVideo(anId, videoResource));
-            case BANNER -> aVideo.setBanner(this.mediaResourceGateway.storeImage(anId, videoResource));
-            case THUMBNAIL -> aVideo.setThumbnail(this.mediaResourceGateway.storeImage(anId, videoResource));
-            case THUMBNAIL_HALF -> aVideo.setThumbnailHalf(this.mediaResourceGateway.storeImage(anId, videoResource));
+            case VIDEO -> aVideo.updateVideoMedia(this.mediaResourceGateway.storeAudioVideo(anId, videoResource));
+            case TRAILER -> aVideo.updateTrailerMedia(this.mediaResourceGateway.storeAudioVideo(anId, videoResource));
+            case BANNER -> aVideo.updateBannerMedia(this.mediaResourceGateway.storeImage(anId, videoResource));
+            case THUMBNAIL -> aVideo.updateThumbnailMedia(this.mediaResourceGateway.storeImage(anId, videoResource));
+            case THUMBNAIL_HALF ->
+                    aVideo.updateThumbnailHalfMedia(this.mediaResourceGateway.storeImage(anId, videoResource));
         }
 
         return UploadMediaOutput.with(this.videoGateway.update(aVideo), videoResource.type());
