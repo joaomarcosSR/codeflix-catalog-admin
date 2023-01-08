@@ -18,10 +18,13 @@ import codeflix.catalog.admin.infrastructure.genre.models.GenreResponse;
 import codeflix.catalog.admin.infrastructure.genre.models.UpdateGenreRequest;
 import codeflix.catalog.admin.infrastructure.genre.presenters.GenreApiPresenter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+//TODO: Remover
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 public class GenreController implements GenreAPI {
 

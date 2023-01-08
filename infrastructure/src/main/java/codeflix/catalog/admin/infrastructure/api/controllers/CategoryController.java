@@ -19,6 +19,7 @@ import codeflix.catalog.admin.infrastructure.category.models.CreateCategoryReque
 import codeflix.catalog.admin.infrastructure.category.models.UpdateCategoryRequest;
 import codeflix.catalog.admin.infrastructure.category.presenters.CategoryApiPresenter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -27,6 +28,8 @@ import java.util.function.Function;
 
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
+//TODO: Remover
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 public class CategoryController implements CategoryAPI {
 

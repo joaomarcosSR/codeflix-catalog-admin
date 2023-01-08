@@ -18,10 +18,13 @@ import codeflix.catalog.admin.infrastructure.castmember.models.CreateCastMemberR
 import codeflix.catalog.admin.infrastructure.castmember.models.UpdateCastMemberRequest;
 import codeflix.catalog.admin.infrastructure.castmember.presenters.CastMemberApiPresenter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
+//TODO: Remover
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 public class CastMemberController implements CastMemberAPI {
 
