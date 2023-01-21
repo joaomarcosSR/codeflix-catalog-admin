@@ -9,8 +9,12 @@ services:
       - MYSQL_DATABASE=adm_videos
     security_opt:
       - seccomp:unconfined
+    restart: always
+    tty: true
     ports:
       - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
     networks:
       - amd_videos_network
 
@@ -30,3 +34,6 @@ services:
 
 networks:
   amd_videos_network:
+    name: amd_videos_network
+    driver: bridge
+    external: false
