@@ -2,6 +2,7 @@ package codeflix.catalog.admin;
 
 import codeflix.catalog.admin.infrastructure.Main;
 import codeflix.catalog.admin.infrastructure.configuration.ObjectMapperConfig;
+import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
@@ -17,6 +18,7 @@ import java.lang.annotation.*;
 @WebMvcTest
 @ContextConfiguration(classes = Main.class)
 @Import(ObjectMapperConfig.class)
+@Tag("integrationTest")
 public @interface ControllerTest {
 
     @AliasFor(annotation = WebMvcTest.class, attribute = "controllers")

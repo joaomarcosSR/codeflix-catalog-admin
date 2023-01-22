@@ -1,5 +1,6 @@
 package codeflix.catalog.admin.domain.category.entity;
 
+import codeflix.catalog.admin.domain.UnitTest;
 import codeflix.catalog.admin.domain._share.exceptions.DomainException;
 import codeflix.catalog.admin.domain._share.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-class CategoryTest {
+class CategoryTest extends UnitTest {
 
     @Test
     void givenAValidParams_WhenCallNewCategory_ThenInstantiateACategory() {
@@ -15,7 +16,7 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
         Assertions.assertNotNull(actualCategory);
         Assertions.assertNotNull(actualCategory.getId());
@@ -35,9 +36,9 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        ThrowsValidationHandler handler = new ThrowsValidationHandler();
+        final ThrowsValidationHandler handler = new ThrowsValidationHandler();
 
         final DomainException actualException = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(handler));
 
@@ -53,9 +54,9 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        ThrowsValidationHandler handler = new ThrowsValidationHandler();
+        final ThrowsValidationHandler handler = new ThrowsValidationHandler();
 
         final DomainException actualException = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(handler));
 
@@ -71,9 +72,9 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        ThrowsValidationHandler handler = new ThrowsValidationHandler();
+        final ThrowsValidationHandler handler = new ThrowsValidationHandler();
 
         final DomainException actualException = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(handler));
 
@@ -97,9 +98,9 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        ThrowsValidationHandler handler = new ThrowsValidationHandler();
+        final ThrowsValidationHandler handler = new ThrowsValidationHandler();
 
         final DomainException actualException = Assertions.assertThrows(DomainException.class, () -> actualCategory.validate(handler));
 
@@ -113,7 +114,7 @@ class CategoryTest {
         final String expectedDescription = " ";
         final boolean expectedIsActive = true;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
 
@@ -133,7 +134,7 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
 
-        Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
 
@@ -153,7 +154,7 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
 
-        Category aCategory = Category.newCategory(expectedName, expectedDescription, true);
+        final Category aCategory = Category.newCategory(expectedName, expectedDescription, true);
 
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
 
@@ -182,7 +183,7 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category aCategory = Category.newCategory(expectedName, expectedDescription, false);
+        final Category aCategory = Category.newCategory(expectedName, expectedDescription, false);
 
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
 
@@ -211,13 +212,13 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category aCategory = Category.newCategory("Film", "A categoria", expectedIsActive);
+        final Category aCategory = Category.newCategory("Film", "A categoria", expectedIsActive);
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
 
         final Instant createdAt = aCategory.getCreatedAt();
         final Instant updatedAt = aCategory.getUpdatedAt();
 
-        Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
 
         Assertions.assertNotNull(actualCategory);
@@ -236,7 +237,7 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
 
-        Category aCategory = Category.newCategory("Film", "A categoria", true);
+        final Category aCategory = Category.newCategory("Film", "A categoria", true);
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
         Assertions.assertTrue(aCategory.isActive());
         Assertions.assertNull(aCategory.getDeletedAt());
@@ -244,7 +245,7 @@ class CategoryTest {
         final Instant createdAt = aCategory.getCreatedAt();
         final Instant updatedAt = aCategory.getUpdatedAt();
 
-        Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
 
         Assertions.assertNotNull(actualCategory);
@@ -263,13 +264,13 @@ class CategoryTest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
 
-        Category aCategory = Category.newCategory("Film", "A categoria", true);
+        final Category aCategory = Category.newCategory("Film", "A categoria", true);
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
 
         final Instant createdAt = aCategory.getCreatedAt();
         final Instant updatedAt = aCategory.getUpdatedAt();
 
-        Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
+        final Category actualCategory = aCategory.update(expectedName, expectedDescription, expectedIsActive);
 
         Assertions.assertNotNull(actualCategory);
         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());

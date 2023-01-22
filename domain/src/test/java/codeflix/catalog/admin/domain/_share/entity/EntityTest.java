@@ -1,5 +1,6 @@
 package codeflix.catalog.admin.domain._share.entity;
 
+import codeflix.catalog.admin.domain.UnitTest;
 import codeflix.catalog.admin.domain._share.utils.IdUtils;
 import codeflix.catalog.admin.domain._share.utils.InstantUtils;
 import codeflix.catalog.admin.domain._share.validation.ValidationHandler;
@@ -14,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class EntityTest {
+class EntityTest extends UnitTest {
     @Test
     void givenNullAsEvents_whenInstantiate_shouldBeOk() {
         final List<DomainEvent> events = null;

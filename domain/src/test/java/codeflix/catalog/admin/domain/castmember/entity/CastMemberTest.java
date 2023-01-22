@@ -1,11 +1,12 @@
 package codeflix.catalog.admin.domain.castmember.entity;
 
+import codeflix.catalog.admin.domain.UnitTest;
 import codeflix.catalog.admin.domain._share.exceptions.NotificationException;
 import codeflix.catalog.admin.domain.castmember.enums.CastMemberType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class CastMemberTest {
+class CastMemberTest extends UnitTest {
 
     @Test
     void givenAValidParams_whenCallsNewMember_thenInstantiateACastMember() {

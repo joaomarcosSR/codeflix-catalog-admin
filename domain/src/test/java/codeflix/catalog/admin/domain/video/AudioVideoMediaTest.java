@@ -1,9 +1,10 @@
 package codeflix.catalog.admin.domain.video;
 
+import codeflix.catalog.admin.domain.UnitTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class AudioVideoMediaTest {
+class AudioVideoMediaTest extends UnitTest {
     @Test
     void givenValidParams_whenCallsNewAudioVideo_ShouldReturnInstance() {
         // given

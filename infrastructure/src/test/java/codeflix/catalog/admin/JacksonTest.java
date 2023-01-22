@@ -1,6 +1,7 @@
 package codeflix.catalog.admin;
 
 import codeflix.catalog.admin.infrastructure.configuration.ObjectMapperConfig;
+import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -14,5 +15,6 @@ import java.lang.annotation.*;
 @ActiveProfiles("test-integration")
 @JsonTest(includeFilters =
 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = ObjectMapperConfig.class))
+@Tag("integrationTest")
 public @interface JacksonTest {
 }

@@ -1,5 +1,6 @@
 package codeflix.catalog.admin.domain.video;
 
+import codeflix.catalog.admin.domain.UnitTest;
 import codeflix.catalog.admin.domain._share.exceptions.DomainException;
 import codeflix.catalog.admin.domain._share.validation.handler.ThrowsValidationHandler;
 import codeflix.catalog.admin.domain.castmember.value.object.CastMemberID;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Year;
 import java.util.Set;
 
-class VideoValidatorTest {
+class VideoValidatorTest extends UnitTest {
 
     @Test
     void givenNullTitle_whenCallsValidate_shouldReceiveError() {
