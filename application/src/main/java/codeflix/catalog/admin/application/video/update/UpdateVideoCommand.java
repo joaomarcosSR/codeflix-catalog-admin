@@ -23,6 +23,38 @@ public record UpdateVideoCommand(
         Resource thumbnail,
         Resource thumbnailHalf
 ) {
+    public static UpdateVideoCommand with(
+            final String anId,
+            final String aTitle,
+            final String aDescription,
+            final Integer aLaunchDate,
+            final Double aDuration,
+            final Boolean wasOpened,
+            final Boolean wasPublished,
+            final String rating,
+            final Set<String> categories,
+            final Set<String> genres,
+            final Set<String> members
+    ) {
+        return with(
+                anId,
+                aTitle,
+                aDescription,
+                aLaunchDate,
+                aDuration,
+                wasOpened,
+                wasPublished,
+                rating,
+                categories,
+                genres,
+                members,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+    }
 
     public static UpdateVideoCommand with(
             final String anId,

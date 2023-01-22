@@ -37,7 +37,10 @@ public class GenreController implements GenreAPI {
     public GenreController(
             final CreateGenreUseCase createGenreUseCase,
             final GetGenreByIdUseCase getGenreByIdUseCase,
-            final UpdateGenreUseCase updateGenreUseCase, final DeleteGenreUseCase deleteGenreUseCase, final ListGenreUseCase listGenreUseCase) {
+            final UpdateGenreUseCase updateGenreUseCase,
+            final DeleteGenreUseCase deleteGenreUseCase,
+            final ListGenreUseCase listGenreUseCase
+    ) {
         this.createGenreUseCase = createGenreUseCase;
         this.getGenreByIdUseCase = getGenreByIdUseCase;
         this.updateGenreUseCase = updateGenreUseCase;
