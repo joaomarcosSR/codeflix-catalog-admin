@@ -24,6 +24,7 @@ public interface GenreApiPresenter {
                 output.id(),
                 output.name(),
                 output.isActive(),
+                output.categories(),
                 output.createdAt(),
                 output.deletedAt()
         );

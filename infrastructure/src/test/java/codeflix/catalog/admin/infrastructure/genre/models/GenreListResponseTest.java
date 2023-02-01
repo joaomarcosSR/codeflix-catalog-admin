@@ -1,12 +1,14 @@
 package codeflix.catalog.admin.infrastructure.genre.models;
 
 import codeflix.catalog.admin.JacksonTest;
+import codeflix.catalog.admin.domain._share.utils.IdUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
 
 import java.time.Instant;
+import java.util.List;
 
 @JacksonTest
 class GenreListResponseTest {
@@ -19,6 +21,7 @@ class GenreListResponseTest {
         final var expectedId = "123";
         final var expectedName = "Ação";
         final var expectedIsActive = false;
+        final var expectedCategories = List.of(IdUtils.uuid(), IdUtils.uuid());
         final var expectedCreatedAt = Instant.now();
         final var expectedDeletedAt = Instant.now();
 
@@ -26,6 +29,7 @@ class GenreListResponseTest {
                 expectedId,
                 expectedName,
                 expectedIsActive,
+                expectedCategories,
                 expectedCreatedAt,
                 expectedDeletedAt
         );
@@ -36,6 +40,7 @@ class GenreListResponseTest {
                 .hasJsonPathValue("$.id", expectedId)
                 .hasJsonPathValue("$.name", expectedName)
                 .hasJsonPathValue("$.is_active", expectedIsActive)
+                .hasJsonPathValue("$.categories_id", expectedCategories)
                 .hasJsonPathValue("$.created_at", expectedCreatedAt.toString())
                 .hasJsonPathValue("$.deleted_at", expectedDeletedAt.toString());
     }

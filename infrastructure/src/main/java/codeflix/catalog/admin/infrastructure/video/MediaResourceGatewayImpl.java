@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hibernate.internal.util.collections.CollectionHelper.isNotEmpty;
+
 @Component
 public class MediaResourceGatewayImpl implements MediaResourceGateway {
 
@@ -41,7 +43,7 @@ public class MediaResourceGatewayImpl implements MediaResourceGateway {
     @Override
     public void clearResources(final VideoID anId) {
         final List<String> names = this.storageService.list(this.getFolder(anId));
-        this.storageService.deleteAll(names);
+        if (isNotEmpty(names)) this.storageService.deleteAll(names);
     }
 
     @Override

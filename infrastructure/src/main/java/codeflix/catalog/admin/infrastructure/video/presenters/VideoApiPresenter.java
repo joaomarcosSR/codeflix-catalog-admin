@@ -45,6 +45,8 @@ public interface VideoApiPresenter {
     }
 
     static AudioVideoMediaResponse present(final AudioVideoMedia media) {
+        if (media == null) return null;
+
         return new AudioVideoMediaResponse(
                 media.id(),
                 media.checksum(),
